@@ -45,7 +45,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.RentWitholdingLetter',
       version='0.0.1',
       description=('A docassemble extension.'),
-      long_description='# docassemble.RentWitholdingLetter\n\nA docassemble extension.\n\n## Author\n\ncbarandao@suffolk.edu\n\n',
+      long_description='# docassemble.RentWitholdingLetter\r\n\r\nThis is a rent withholding letter.\r\n\r\n## Author\r\n\r\ncbarandao@suffolk.edu\r\n\r\n',
       long_description_content_type='text/markdown',
       author='',
       author_email='cbarandao@suffolk.edu',

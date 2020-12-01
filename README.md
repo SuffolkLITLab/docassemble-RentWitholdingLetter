@@ -1,6 +1,6 @@
 # docassemble.RentWitholdingLetter
 
-A docassemble extension.
+This is a rent withholding letter.
 
 ## Author
 
