@@ -82,7 +82,7 @@ continue button field: Rent_Withholding_Letter_intro
 question: |
   Tenant Rent Withholding Letter
 subquestion: |
-  This letter is created as a notification device for tenants to give to their landlords. This letter explains to the landlord that the tenant with be withholding rent because the landlord failed to make the necessary repairs to issue(s) on or within their rental property. 
+  The purpose of this form is to help tenants fill out a letter in order to put their landlord on notice that they will be withholding rent because the landlord failed to make the necessary repairs to issue(s) on or within their rental property. 
 ---
 id: Review your form before you sign it
 continue button field: Rent_Withholding_Letter_preview_question
