@@ -52,6 +52,10 @@ id: interview_order_Rent_Withholding_Letter
 code: |
   # This is a placeholder to control logic flow in this interview
   # Set the allowed courts for this interview
+  withhold_qualify_has_problem
+  if not (withhold_qualify_has_problem and withhold_qualify_problem_is_serious and withhold_qualify_problem_not_tenants_fault and withhold_qualify_not_tenants_control and withhold_qualify_landlord_knowledge and withhold_qualify_not_behind_in_rent_before_problem and withhold_qualify_fixable_without_moveout):
+    withholding_kickout
+  withhold_suggested_reasonable_time
   nav.set_section('review_Rent_Withholding_Letter')
   user_role = 'plaintiff'
   condition
@@ -76,9 +80,112 @@ comment: |
 id: Tenant Rent Withholding Letter
 continue button field: Rent_Withholding_Letter_intro
 question: |
-  Tenant Rent Withholding Letter
+  Tell your landlord that you are withholding rent
 subquestion: |
-  This letter is created as a notification device for tenants to give to their landlords. This letter explains to the landlord that the tenant with be withholding rent because the landlord failed to make the necessary repairs to issue(s) on or within their rental property. 
+  Everyone has the right to a safe home that is in good condition.
+  
+  If your landlord knows about a problem in your home and has not fixed it
+  in a reasonable time, they may owe you money.
+  
+  Sometimes a tenant decides to **withhold**, or refuse to pay, rent until
+  the landlord fixes the problem.
+  
+  This website will help you write a letter to your landlord explaining that
+  you plan to withhold your rent.
+---
+id: should I withhold rent?
+question: |
+  Am I ready to withhold rent?
+subquestion: |
+  Look over each question below carefully. Answer as well as you know.
+  
+  A judge may decide if you are right or if your landlord is right.
+fields:
+  - I have a serious problem in my house that needs to be fixed: withhold_qualify_has_problem
+    datatype: yesnoradio
+  - The problem is a serious {risk to health or safety} of me or someone who lives with me: withhold_qualify_problem_is_serious
+    datatype: yesnoradio
+    show if: withhold_qualify_has_problem
+  - I did not cause the problem: withhold_qualify_problem_not_tenants_fault
+    datatype: yesnoradio
+    show if: withhold_qualify_has_problem
+  - The problem was not caused by my guest or someone who lives with me: withhold_qualify_not_tenants_control
+    datatype: yesnoradio
+    show if: withhold_qualify_has_problem
+  - My landlord knows about the problem: withhold_qualify_landlord_knowledge
+    datatype: yesnoradio
+    show if: withhold_qualify_has_problem
+  - My landlord learned about the problem at a time that I was caught up with my rent: withhold_qualify_not_behind_in_rent_before_problem
+    datatype: yesnoradio
+    show if: withhold_qualify_landlord_knowledge
+  - The problem can be fixed without me permanently moving out: withhold_qualify_fixable_without_moveout
+    datatype: yesnoradio
+    show if: withhold_qualify_has_problem
+terms:
+  risk to health or safety: |
+    If a problem is something your landlord needs to fix according to the 
+    state sanitary code, it is a risk to health or safety.
+help:
+  label: |
+    Law about withholding rent
+  content: |
+    Read more on [MassLegalHelp.org](https://www.masslegalhelp.org/housing/lt1-pullout-8-getting-repairs-made)
+---
+id: should I withhold rent
+question: |
+  Should I withhold rent?
+subquestion: |
+  Withholding rent can be a good way to get your landlord's attention but
+  it can also have risks.
+  
+  Below are some factors that may make withholding rent a good idea or a bad
+  idea for your situation.
+  
+  Look over the list below carefully and answer as well as you can.
+fields:
+  - I have given my landlord a {reasonable} amount of time to fix the problem: withhold_suggested_reasonable_time
+    datatype: yesnoradio
+  - A housing inspector has told my landlord to fix the problem: withhold_suggested_inspector
+    datatype: yesnoradio
+  - My landlord did not fix the problem within the time that the housing inspector told my landlord to fix it: withhold_suggested_inspector_time_expired
+    datatype: yesnoradio
+  - I can work together with other tenants in my building: withhold_suggested_other_tenants
+    datatype: yesnoradio
+  - I can work with a {tenant organizing union}: withhold_suggested_organize
+    datatype: yesnoradio
+  - I can talk to a lawyer: withhold_suggested_lawyer
+    datatype: yesnoradio
+  - I can put the money into a separate bank account: withhold_suggested_escrow_possible
+    datatype: yesnoradio
+  - I am able to risk my landlord filing an eviction case against me: withhold_suggested_eviction_risk
+    datatype: yesnoradio    
+terms:
+  reasonable: |
+    How much time is reasonable to fix a problem depends on how serious the 
+    problem is. An emergency problem, such as no heat in the winter, should be 
+    fixed within a day. A less serious problem could be fixed in 5 to 30 days.
+  tenant organizing union: |
+    A tenant's union, like City Life/Vida Urbana, or Lynn Tenants United, 
+    may be a good resource to help you stand up to your landlord. Not all
+    tenants have a local tenant's union.
+---
+id: kickout withholding not right choice
+decoration: bell
+event: withholding_kickout
+question: |
+  Rent withholding may not be the right choice for you.
+subquestion: |
+  The [law about withholding rent](https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleIII/Chapter239/Section8A) says that you must:
+  
+  * Have a serious housing problem
+  * Your landlord needs to know about the problem  
+  * You must not have been behind in rent at the time that your landlord learned about the problem
+  * The problem cannot be caused by you or someone under your control, like a guest or your child
+  * The problem must be fixable without you moving out permanently
+  
+  You still have the right to a safe home. [Learn more about other 
+  options](https://www.masslegalhelp.org/housing/lt1-chapter-8-repairs) to
+  get your home repaired.
 ---
 id: Issue s Description
 question: |
