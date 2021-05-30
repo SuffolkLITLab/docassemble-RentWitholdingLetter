@@ -1,0 +1,42 @@
+---
+include:
+  - tenant_rent_withholding_letter.yml
+---
+mandatory: True
+id: main_order_tenant_rent_withholding_letter
+code: |
+  basic_questions_intro_screen 
+  Rent_Withholding_Letter_intro
+  interview_order_Rent_Withholding_Letter  
+  Rent_Withholding_Letter_preview_question
+  basic_questions_signature_flow
+  users[0].signature
+  download_Rent_Withholding_Letter
+---
+objects:
+  - al_user_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter")
+  - al_recipient_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter")
+---
+id: Review your form before you sign it
+continue button field: Rent_Withholding_Letter_preview_question
+question: |
+  Review your form before you sign it
+subquestion: |
+  Here is a preview of the form you'll sign on the next page. 
+  
+   ${ al_recipient_bundle.as_pdf() }
+---
+progress: 100
+event: download_Rent_Withholding_Letter
+id: download_Rent_Withholding_Letter
+question: |
+  Your form is ready to download and file
+subquestion: |
+  Thank you ${users}. Your form is ready to download and deliver.
+    
+  ${ al_user_bundle.download_list_html() }
+  
+  ${ al_user_bundle.send_button_html() }
+---
+code: |
+  Rent_Withholding_Letter_attachment.enabled = True

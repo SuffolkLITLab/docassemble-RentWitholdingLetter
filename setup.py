@@ -43,17 +43,17 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.RentWitholdingLetter',
-      version='0.0.1',
+      version='0.2',
       description=('A docassemble extension.'),
       long_description='# docassemble.RentWitholdingLetter\r\n\r\nThis is a rent withholding letter.\r\n\r\n## Author\r\n\r\ncbarandao@suffolk.edu\r\n\r\n',
       long_description_content_type='text/markdown',
-      author='',
+      author='Cherise Baranadao',
       author_email='cbarandao@suffolk.edu',
       license='The MIT License (MIT)',
       url='https://docassemble.org',
       packages=find_packages(),
       namespace_packages=['docassemble'],
-      install_requires=['docassemble.MAVirtualCourt'],
+      install_requires=['docassemble.AssemblyLine>=2.0.19'],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/RentWitholdingLetter/', package='docassemble.RentWitholdingLetter'),
      )

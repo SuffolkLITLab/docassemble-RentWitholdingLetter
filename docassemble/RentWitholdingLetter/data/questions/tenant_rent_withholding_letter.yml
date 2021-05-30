@@ -1,0 +1,175 @@
+include:
+  - docassemble.AssemblyLine:al_package.yml
+  - docassemble.MassAccess:massaccess.yml
+---
+metadata:
+  title: |
+    Tenant Rent Withholding Letter
+  short title: |
+    Rent Withholding Letter
+  authors:
+    - Cherise Barandao
+    - Quinten Steenhuis
+---
+code: |
+  interview_short_title = "Write your landlord a rent withholding letter"
+---
+mandatory: True
+code: |
+  interview_metadata # make sure we initialize the object
+  if not defined("interview_metadata['Rent_Withholding_Letter']"):
+    interview_metadata.initializeObject('Rent_Withholding_Letter')
+  interview_metadata['Rent_Withholding_Letter'].update({
+    'title': 'Tenant Rent Withholding Letter',
+    'short title': 'Rent Withholding Letter',
+    'description': 'This letter is created to...',
+    'original_form': 'https://www.masslegalhelp.org/housing/lt1-form-12-rent-w-holding.pdf',
+    'allowed courts': [
+      'Boston Municipal Court',
+      'District Court',
+      'Housing Court',
+      'Superior Court',
+    ],
+    'categories': [
+      'Housing',
+    ],
+    'logic block variable': 'Rent_Withholding_Letter',
+    'attachment block variable': 'Rent_Withholding_Letter_attachment',
+    'typical role': 'plaintiff',
+  })
+---
+features:
+  navigation: True
+---
+sections:
+  - review_Rent_Withholding_Letter: Review your answers
+---
+objects:
+  - users: PeopleList.using(ask_number=True, target_number=1)
+  - other_parties: PeopleList.using(ask_number=True, target_number=1)
+---
+id: interview_order_Rent_Withholding_Letter
+code: |
+  # This is a placeholder to control logic flow in this interview
+  # Set the allowed courts for this interview
+  nav.set_section('review_Rent_Withholding_Letter')
+  user_role = 'plaintiff'
+  condition
+  repairs_request_date
+  set_progress(12.5)
+  delivery_date
+  # Set the answer file name.
+  set_parts(subtitle=str(users))
+  users[0].address.address
+  set_progress(25.0)
+  other_parties[0]
+  users[0]
+  set_progress(37.5)
+  str(other_parties)
+  other_parties[0].address.address
+  # Save (anonymized) interview statistics.
+  store_variables_snapshot(data={'zip': users[0].address.zip})
+  interview_order_Rent_Withholding_Letter = True
+---
+comment: |
+  This question is used to introduce your interview. Please customize
+id: Tenant Rent Withholding Letter
+continue button field: Rent_Withholding_Letter_intro
+question: |
+  Tenant Rent Withholding Letter
+subquestion: |
+  This letter is created as a notification device for tenants to give to their landlords. This letter explains to the landlord that the tenant with be withholding rent because the landlord failed to make the necessary repairs to issue(s) on or within their rental property. 
+---
+id: Issue s Description
+question: |
+  Issue(s) Description:
+subquestion: |
+  Describe the issue(s) you are experiencing with your rented property.
+fields:
+  - 'Condition': condition
+    input type: area
+  - 'Conditions': conditions
+    input type: area
+---
+id: Repair Request Date
+question: |
+  Repair Request Date
+subquestion: |
+  On approximately what day did you send your repair request letter to your landlord?
+fields:
+  - 'Notification Date for Repairs Requested': repairs_request_date
+    datatype: date
+---
+id: Repair Letter Delivery Date
+question: |
+  Repair Letter Delivery Date
+subquestion: |
+  What day did you deliver your repair request letter?
+fields:
+  - 'Repair Letter Delivery Date': delivery_date
+    datatype: date
+---
+id: landlords name
+question: |
+  What is your landlord's name?
+fields:
+  - Landlord's full name: other_parties[0].name.first
+---
+objects:
+  - Rent_Withholding_Letter_attachment: ALDocument.using(title="Rent Withholding Letter", filename="rent_withholding_letter")
+
+---
+attachment:
+    variable name: Rent_Withholding_Letter_attachment[i]
+    name: Rent Withholding Letter
+    filename: Rent_Withholding_Letter
+    docx template file: Form_12_-_Fielddox.docx
+---
+id: Rent_Withholding_Letter review screen
+event: review_Rent_Withholding_Letter
+question: |
+  Edit your answers below  
+review: 
+  - Edit: condition
+    button: |
+      Condition:
+      > ${ single_paragraph(condition) }
+  - Edit: conditions
+    button: |
+      Conditions:
+      > ${ single_paragraph(conditions) }
+  - Edit: repairs_request_date
+    button: |
+      Notification Date for Repairs Requested:
+      ${ repairs_request_date.format() }
+  - Edit: delivery_date
+    button: |
+      Repair Letter Delivery Date:
+      ${ delivery_date.format() }
+  - Edit: users[0].address.address
+    button: |
+      users[0].address.address:
+      ${ users[0].address.address }
+  - Edit: users[0].signature
+    button: |
+      users[0].signature:
+      ${ users[0].signature }
+  - Edit: other_parties[0].name.first
+    button: |
+      other_parties[0]:
+      ${ other_parties[0] }
+  - Edit: users[0].name.first
+    button: |
+      users[0]:
+      ${ users[0] }
+  - Edit: other_parties[0].name.first
+    button: |
+      other_parties:
+      ${ other_parties }
+  - Edit: other_parties[0].address.address
+    button: |
+      other_parties[0].address.address:
+      ${ other_parties[0].address.address }
+
+
+
