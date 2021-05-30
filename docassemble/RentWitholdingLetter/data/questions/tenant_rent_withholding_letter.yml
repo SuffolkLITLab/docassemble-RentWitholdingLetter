@@ -123,7 +123,7 @@ attachment:
     variable name: Rent_Withholding_Letter_attachment[i]
     name: Rent Withholding Letter
     filename: Rent_Withholding_Letter
-    docx template file: Form_12_-_Fielddox.docx
+    docx template file: rent_withholding_letter.docx
 ---
 id: Rent_Withholding_Letter review screen
 event: review_Rent_Withholding_Letter
