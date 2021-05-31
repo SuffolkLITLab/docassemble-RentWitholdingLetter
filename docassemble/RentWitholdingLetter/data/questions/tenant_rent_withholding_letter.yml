@@ -55,10 +55,11 @@ code: |
   withhold_qualify_has_problem
   if not (withhold_qualify_has_problem and withhold_qualify_problem_is_serious and withhold_qualify_problem_not_tenants_fault and withhold_qualify_not_tenants_control and withhold_qualify_landlord_knowledge and withhold_qualify_not_behind_in_rent_before_problem and withhold_qualify_fixable_without_moveout):
     withholding_kickout
+  withhold_rent_education
   withhold_suggested_reasonable_time
   nav.set_section('review_Rent_Withholding_Letter')
   user_role = 'plaintiff'
-  condition
+  conditions
   repairs_request_date
   set_progress(12.5)
   delivery_date
@@ -115,7 +116,7 @@ fields:
   - My landlord knows about the problem: withhold_qualify_landlord_knowledge
     datatype: yesnoradio
     show if: withhold_qualify_has_problem
-  - My landlord learned about the problem at a time that I was caught up with my rent: withhold_qualify_not_behind_in_rent_before_problem
+  - My landlord learned about the problem at a time that my rent was paid in full: withhold_qualify_not_behind_in_rent_before_problem
     datatype: yesnoradio
     show if: withhold_qualify_landlord_knowledge
   - The problem can be fixed without me permanently moving out: withhold_qualify_fixable_without_moveout
@@ -131,6 +132,90 @@ help:
   content: |
     Read more on [MassLegalHelp.org](https://www.masslegalhelp.org/housing/lt1-pullout-8-getting-repairs-made)
 ---
+id: protecting self with rent withholding
+question: |
+  Protecting yourself when you withhold rent
+subquestion: |
+  #### There are many ways to get repairs made
+  
+  Before you withhold rent, you should understand if it is the right choice
+  for you. Here are some other options that may make sense for some tenants:
+  
+  * Write your landlord a letter.
+  * Ask a city housing inspector to document the problem.
+  * Ask a judge to order your landlord to fix a problem.
+  * Make the repairs yourself and deduct the cost from your rent.
+  
+  [Learn about your options](https://www.masslegalhelp.org/housing/lt1-chapter-8-landlord-refusing-repairs)
+  
+  #### How long is too long to fix a problem?
+  
+  Depending on how serious the problem you reported is, your landlord may
+  need to fix it within 24 hours, 5 days, or 30 days from when they learned
+  about the problem.
+  
+  An example of a 24 hour problem:
+  
+  * No heat in the winter.
+  * No working toilet.
+  
+  An example of a 5 day problem:
+  
+  * No sink or shower.
+  * A rodent or insect infestation.
+  
+  An example of a 30 day problem:
+  
+  * Not enough hot water.
+  * Loose or missing tiles or holes in walls, ceilings, or floors.
+  
+  [Housing code checklist](https://www.masslegalhelp.org/housing/lt1-booklet-2-housing-code-checklist.pdf)
+
+  #### Stronger together
+  
+  Withholding rent is a **tactic** to pressure your landlord to fix your 
+  housing problem. You can be stronger if you work together: with other
+  tenants in your building, with a city-wide tenant's union, a tenant
+  organizer or your local legal aid provider.
+  
+  * [Organize your neighbors](https://www.masslegalhelp.org/housing/lt1-pullout-10-getting-organized)
+  * Tenants in Greater Boston may call [City Life/Vida Urbana](https://www.clvu.org/) ${ tel("(617) 524-3541") }
+  * [Find an attorney](https://masslrf.org/en/triage/start/housing)
+  
+  #### Keeping your money safe
+  
+  It is important to know that while you have the right to withhold rent,
+  it does not mean that you will get to keep it all if your landlord
+  fixes the problem. A judge may decide that your landlord will get some
+  or all of the money back.
+  
+  The amount that you can keep depends on how much a judge decides that your
+  apartment is worth with the problems.
+  
+  One way to keep your money safe and to help show the judge that you are
+  serious is to put the money in an **escrow** account.
+  
+  You can open an escrow account at any bank.
+  
+  #### What happens if your landlord tries to evict you?
+  
+  One risk of withholding rent is that your landlord will try to evict you.
+  
+  Only a judge can evict you from your apartment. Your landlord may file
+  eviction paperwork with the court. Some important facts to know about
+  eviction:
+  
+  * An eviction case is a public filing. It may appear on your credit report
+    if you lose, and future landlords may learn that your landlord tried to 
+    evict you.
+  * It takes time to schedule an eviction case.
+  * It costs your landlord money to file an eviction case. They need to pay to
+    file the case. They may also need to pay a lawyer.
+    
+  [Learn more about evictions](https://www.masslegalhelp.org/housing/lt1-pullout-12-evictions).
+  
+continue button field: withhold_rent_education
+---
 id: should I withhold rent
 question: |
   Should I withhold rent?
@@ -143,12 +228,15 @@ subquestion: |
   
   Look over the list below carefully and answer as well as you can.
 fields:
+  - My landlord refuses to fix the problem, or they are taking too long to fix it: withhold_suggested_landlord_refusing
+    datatype: yesnoradio
   - I have given my landlord a {reasonable} amount of time to fix the problem: withhold_suggested_reasonable_time
     datatype: yesnoradio
   - A housing inspector has told my landlord to fix the problem: withhold_suggested_inspector
     datatype: yesnoradio
   - My landlord did not fix the problem within the time that the housing inspector told my landlord to fix it: withhold_suggested_inspector_time_expired
     datatype: yesnoradio
+    show if: withhold_suggested_inspector
   - I can work together with other tenants in my building: withhold_suggested_other_tenants
     datatype: yesnoradio
   - I can work with a {tenant organizing union}: withhold_suggested_organize
@@ -189,14 +277,13 @@ subquestion: |
 ---
 id: Issue s Description
 question: |
-  Issue(s) Description:
+  What problems do you need your landlord to fix?
 subquestion: |
-  Describe the issue(s) you are experiencing with your rented property.
+  Use your own words to describe the problem.
 fields:
-  - 'Condition': condition
+  - no label: conditions
     input type: area
-  - 'Conditions': conditions
-    input type: area
+    rows: 5
 ---
 id: Repair Request Date
 question: |
@@ -237,10 +324,6 @@ event: review_Rent_Withholding_Letter
 question: |
   Edit your answers below  
 review: 
-  - Edit: condition
-    button: |
-      Condition:
-      > ${ single_paragraph(condition) }
   - Edit: conditions
     button: |
       Conditions:
