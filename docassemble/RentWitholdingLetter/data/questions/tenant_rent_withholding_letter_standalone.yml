@@ -14,8 +14,8 @@ code: |
   download_Rent_Withholding_Letter
 ---
 objects:
-  - al_user_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter")
-  - al_recipient_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter")
+  - al_user_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter", title="Your letter")
+  - al_recipient_bundle: ALDocumentBundle.using(elements=[Rent_Withholding_Letter_attachment], filename="rent_withholding_letter", title="Your letter")
 ---
 id: Review your form before you sign it
 continue button field: Rent_Withholding_Letter_preview_question
@@ -24,7 +24,7 @@ question: |
 subquestion: |
   Here is a preview of the form you'll sign on the next page. 
   
-   ${ al_recipient_bundle.as_pdf() }
+   ${ al_recipient_bundle.as_pdf(key='preview') }
 ---
 progress: 100
 event: download_Rent_Withholding_Letter

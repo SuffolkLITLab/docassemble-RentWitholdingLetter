@@ -59,10 +59,9 @@ code: |
   withhold_suggested_reasonable_time
   nav.set_section('review_Rent_Withholding_Letter')
   user_role = 'plaintiff'
-  conditions
   repairs_request_date
+  rent_withholding_conditions  
   set_progress(12.5)
-  delivery_date
   # Set the answer file name.
   set_parts(subtitle=str(users))
   users[0].address.address
@@ -224,7 +223,7 @@ subquestion: |
   it can also have risks.
   
   Below are some factors that may make withholding rent a good idea or a bad
-  idea for your situation.
+  idea for your situation. The choice is yours.
   
   Look over the list below carefully and answer as well as you can.
 fields:
@@ -279,29 +278,20 @@ id: Issue s Description
 question: |
   What problems do you need your landlord to fix?
 subquestion: |
-  Use your own words to describe the problem.
+  Use your own words to describe the problems that you told your landlord about
+  on or before ${ repairs_request_date }.
 fields:
-  - no label: conditions
+  - no label: rent_withholding_conditions
     input type: area
     rows: 5
 ---
 id: Repair Request Date
 question: |
-  Repair Request Date
+  When did you tell your landlord that you needed the repairs?
 subquestion: |
-  On approximately what day did you send your repair request letter to your landlord?
+  Write down the best date that you can remember.
 fields:
-  - 'Notification Date for Repairs Requested': repairs_request_date
-    datatype: date
----
-id: Repair Letter Delivery Date
-question: |
-  Repair Letter Delivery Date
-subquestion: |
-  What day did you deliver your repair request letter?
-fields:
-  - 'Repair Letter Delivery Date': delivery_date
-    datatype: date
+  - no label: repairs_request_date
 ---
 id: landlords name
 question: |
@@ -324,18 +314,14 @@ event: review_Rent_Withholding_Letter
 question: |
   Edit your answers below  
 review: 
-  - Edit: conditions
+  - Edit: rent_withholding_conditions
     button: |
       Conditions:
-      > ${ single_paragraph(conditions) }
+      > ${ single_paragraph(rent_withholding_conditions) }
   - Edit: repairs_request_date
     button: |
       Notification Date for Repairs Requested:
       ${ repairs_request_date.format() }
-  - Edit: delivery_date
-    button: |
-      Repair Letter Delivery Date:
-      ${ delivery_date.format() }
   - Edit: users[0].address.address
     button: |
       users[0].address.address:
